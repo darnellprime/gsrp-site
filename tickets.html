@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support Tickets | GSRP</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    background:#0a0a0a;
+    color:white;
+    font-family:'Poppins',sans-serif;
+    text-align:center;
+    padding:60px 20px;
+}
+
+h1{
+    font-size:48px;
+    margin-bottom:30px;
+}
+
+.container{
+    max-width:600px;
+    margin:auto;
+    background:rgba(255,255,255,0.05);
+    padding:30px;
+    border-radius:15px;
+    backdrop-filter:blur(10px);
+}
+
+select, input, textarea{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border:none;
+    border-radius:8px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:25px;
+    background:white;
+    color:black;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.back{
+    margin-top:15px;
+    background:#444;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Support Ticket System</h1>
+
+<div class="container">
+
+<select id="category">
+    <option>General Support</option>
+    <option>Staff Report</option>
+    <option>Bug Report</option>
+    <option>Appeal</option>
+</select>
+
+<input type="text" id="name" placeholder="Your Name">
+<input type="text" id="discord" placeholder="Discord Username">
+<textarea id="message" rows="5" placeholder="Describe your issue..."></textarea>
+
+<button onclick="sendTicket()">Submit Ticket</button>
+<button class="back" onclick="location.href='index.html'">Back Home</button>
+
+</div>
+
+<script>
+
+/* ?? SUPPORT WEBHOOK */
+const webhook = "https://discord.com/api/webhooks/1479018197687730176/Rf2HpL8nx1IA9ecXGKfkQ4gMwnwoSCx3A6M8C4aSFAu69EivuPcddHSiZAVAfSQu4jVG";
+
+/* ?? SUPPORT ROLE ID TO PING */
+const SUPPORT_ROLE_ID = "YOUR_SUPPORT_ROLE_ID";
+
+function sendTicket(){
+
+    const category = document.getElementById("category").value;
+    const name = document.getElementById("name").value;
+    const discord = document.getElementById("discord").value;
+    const message = document.getElementById("message").value;
+
+    if(!name || !discord || !message){
+        alert("Please fill all fields.");
+        return;
+    }
+
+    fetch(webhook,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+            content:`<@&${SUPPORT_ROLE_ID}>`,
+            embeds:[{
+                title:"New Support Ticket",
+                color:0xffffff,
+                fields:[
+                    {name:"Category",value:category},
+                    {name:"Name",value:name},
+                    {name:"Discord",value:discord},
+                    {name:"Message",value:message}
+                ]
+            }]
+        })
+    });
+
+    alert("Ticket Sent!");
+    location.href="index.html";
+}
+
+</script>
+
+</body>
+</html>
