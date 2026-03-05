@@ -18,102 +18,59 @@
 body{
     background:#0a0a0a;
     color:white;
-    overflow-x:hidden;
+    overflow:hidden;
     cursor:none;
 }
 
-/* NAV */
-nav{
+/* LOADING SCREEN */
+#loadingScreen{
     position:fixed;
     width:100%;
-    padding:12px 8%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:rgba(0,0,0,0.6);
-    backdrop-filter:blur(10px);
-    z-index:1000;
-}
-
-nav img{
-    height:95px;
-}
-
-nav ul{
-    list-style:none;
-    display:flex;
-    gap:25px;
-}
-
-nav ul li{
-    cursor:pointer;
-}
-
-/* HERO */
-.hero{
-    height:100vh;
+    height:100%;
+    background:#000;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    text-align:center;
-    padding:0 20px;
+    z-index:99999;
+    transition:opacity 0.8s ease;
 }
 
-.hero h1{
-    font-size:65px;
-    font-weight:800;
+#loadingLogo{
+    width:180px;
+    animation: pulse 2s infinite;
 }
 
-.hero p{
-    margin-top:15px;
-    color:#bbb;
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.1);}
+    100%{transform:scale(1);}
 }
 
-/* BUTTONS */
-.btn{
-    padding:12px 26px;
-    border-radius:30px;
-    text-decoration:none;
-    font-weight:600;
-    transition:0.3s;
-    display:inline-block;
-    margin-top:20px;
+#loadingBar{
+    width:250px;
+    height:4px;
+    background:#222;
+    margin-top:25px;
+    overflow:hidden;
+    border-radius:10px;
 }
 
-.btn-primary{
+#loadingProgress{
+    width:0%;
+    height:100%;
     background:white;
-    color:black;
+    animation: load 2.5s forwards;
 }
 
-.btn-primary:hover{
-    transform:scale(1.07);
+@keyframes load{
+    to{width:100%;}
 }
 
-/* FLOATING LOGO */
-#bg-logo{
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:500px;
-    opacity:0.05;
-    z-index:-1;
-    animation:floatLogo 8s ease-in-out infinite;
-}
-
-@keyframes floatLogo{
-    0%{transform:translate(-50%,-50%) translateY(0);}
-    50%{transform:translate(-50%,-50%) translateY(-20px);}
-    100%{transform:translate(-50%,-50%) translateY(0);}
-}
-
-/* PARTICLES */
-canvas{
-    position:fixed;
-    top:0;
-    left:0;
-    z-index:-2;
+/* MAIN CONTENT */
+#mainContent{
+    opacity:0;
+    transition:opacity 1s ease;
 }
 
 /* CURSOR */
@@ -125,51 +82,88 @@ canvas{
     border-radius:50%;
     pointer-events:none;
     transform:translate(-50%,-50%);
-    z-index:9999;
+    z-index:10000;
+}
+
+/* PARTICLES */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-2;
+}
+
+/* SERVER STATUS */
+#serverStatus{
+    margin-top:25px;
+    font-size:18px;
+}
+
+.btn{
+    padding:12px 26px;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:600;
+    background:white;
+    color:black;
+    display:inline-block;
+    margin-top:20px;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:scale(1.05);
 }
 </style>
 </head>
 
 <body>
 
-<img src="logo.png" id="bg-logo">
+<!-- LOADING SCREEN -->
+<div id="loadingScreen">
+    <img src="logo.png" id="loadingLogo">
+    <div id="loadingBar">
+        <div id="loadingProgress"></div>
+    </div>
+</div>
+
+<!-- MAIN SITE -->
+<div id="mainContent">
+
 <div id="cursor"></div>
 <canvas id="particles"></canvas>
 
-<nav>
-    <img src="logo.png">
-    <ul>
-        <li onclick="location.href='index.html'">Home</li>
-        <li onclick="location.href='applications.html'">Application Center</li>
-        <li onclick="location.href='tickets.html'">Tickets</li>
-    </ul>
-</nav>
+<div style="text-align:center;padding-top:120px;">
+    <h1 style="font-size:60px;">GOLDEN STATE RP</h1>
 
-<div class="hero">
-    <h1>GOLDEN STATE RP</h1>
-    <p>Professional Roleplay • Custom Systems • Community Driven</p>
+    <div id="serverStatus">Checking Server...</div>
 
-    <!-- SERVER STATUS -->
-    <div id="serverStatus" style="margin-top:30px;font-size:18px;">
-        Checking server...
-    </div>
-
-    <!-- CONNECT BUTTON -->
     <a id="connectBtn"
        href="https://cfx.re/join/YOUR_CFX_CODE"
        target="_blank"
-       class="btn btn-primary"
+       class="btn"
        style="pointer-events:none;opacity:0.5;">
        Connect Now
     </a>
+</div>
 
 </div>
 
 <script>
 
-/* CUSTOM CURSOR */
-const cursor = document.getElementById("cursor");
+/* LOADING SCREEN REMOVE */
+window.addEventListener("load",()=>{
+    setTimeout(()=>{
+        document.getElementById("loadingScreen").style.opacity="0";
+        document.getElementById("mainContent").style.opacity="1";
+        setTimeout(()=>{
+            document.getElementById("loadingScreen").style.display="none";
+        },800);
+    },2500);
+});
 
+/* CURSOR */
+const cursor = document.getElementById("cursor");
 document.addEventListener("mousemove", e=>{
     cursor.style.left = e.clientX+"px";
     cursor.style.top = e.clientY+"px";
@@ -179,81 +173,64 @@ document.addEventListener("mousemove", e=>{
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
-function resizeCanvas(){
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+function resize(){
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
 }
-
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
+resize();
+window.addEventListener("resize",resize);
 
 let particles=[];
-
-class Particle{
-    constructor(){
-        this.x=Math.random()*canvas.width;
-        this.y=Math.random()*canvas.height;
-        this.size=Math.random()*2+1;
-        this.speedX=(Math.random()-0.5);
-        this.speedY=(Math.random()-0.5);
-    }
-    update(){
-        this.x+=this.speedX;
-        this.y+=this.speedY;
-        if(this.x<0||this.x>canvas.width) this.speedX*=-1;
-        if(this.y<0||this.y>canvas.height) this.speedY*=-1;
-    }
-    draw(){
-        ctx.fillStyle="white";
-        ctx.beginPath();
-        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-        ctx.fill();
-    }
-}
-
-function init(){
-    for(let i=0;i<100;i++){
-        particles.push(new Particle());
-    }
+for(let i=0;i<90;i++){
+    particles.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        s:Math.random()*2+1,
+        vx:(Math.random()-0.5),
+        vy:(Math.random()-0.5)
+    });
 }
 
 function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     particles.forEach(p=>{
-        p.update();
-        p.draw();
+        p.x+=p.vx;
+        p.y+=p.vy;
+
+        if(p.x<0||p.x>canvas.width) p.vx*=-1;
+        if(p.y<0||p.y>canvas.height) p.vy*=-1;
+
+        ctx.fillStyle="white";
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.s,0,Math.PI*2);
+        ctx.fill();
     });
     requestAnimationFrame(animate);
 }
-
-init();
 animate();
 
-/* SERVER STATUS */
-const SERVER_IP = "23.27.211.19";
-const SERVER_PORT = "3086";
+/* SERVER STATUS FIXED */
+const SERVER_IP="23.27.211.19";
+const SERVER_PORT="3086";
 
-const statusText = document.getElementById("serverStatus");
-const connectBtn = document.getElementById("connectBtn");
+const statusText=document.getElementById("serverStatus");
+const connectBtn=document.getElementById("connectBtn");
 
 async function checkServer(){
     try{
-        const response = await fetch(`http://${SERVER_IP}:${SERVER_PORT}/dynamic.json`);
-        const data = await response.json();
+        const response=await fetch(`http://${SERVER_IP}:${SERVER_PORT}/dynamic.json`);
+        const data=await response.json();
 
-        const players = data.clients;
-        const max = data.sv_maxclients;
+        if(data && data.clients !== undefined){
+            statusText.innerText=`?? Online — Players: ${data.clients} / ${data.sv_maxclients}`;
+            connectBtn.style.pointerEvents="auto";
+            connectBtn.style.opacity="1";
+        }else{
+            throw new Error();
+        }
 
-        statusText.innerText = `?? Online — Players: ${players} / ${max}`;
-
-        connectBtn.style.pointerEvents="auto";
-        connectBtn.style.opacity="1";
-
-    } catch{
-        statusText.innerText = "?? Server Offline";
-
-        connectBtn.style.pointerEvents="none";
-        connectBtn.style.opacity="0.5";
+    }catch{
+        statusText.innerText="?? Server Status Unavailable";
     }
 }
 
