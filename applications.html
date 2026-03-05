@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Application Center | Golden State RP</title>
+<title>Application Center | GSRP</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
@@ -14,37 +14,32 @@ body{
     color:white;
     font-family:'Poppins',sans-serif;
     text-align:center;
-    padding:80px 20px;
+    padding:60px 20px;
 }
 
 h1{
-    font-size:50px;
+    font-size:48px;
     margin-bottom:40px;
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
-    max-width:1100px;
-    margin:auto;
+.category{
+    margin-bottom:50px;
 }
 
-.card{
-    background:rgba(255,255,255,0.05);
-    padding:25px;
-    border-radius:15px;
-    transition:0.3s;
+.category h2{
+    margin-bottom:20px;
+    color:#ccc;
 }
 
-.card:hover{
-    transform:translateY(-6px);
-    background:rgba(255,255,255,0.08);
+.buttons{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:15px;
 }
 
 button{
-    margin-top:15px;
-    padding:10px 22px;
+    padding:10px 20px;
     border-radius:25px;
     border:none;
     background:white;
@@ -58,15 +53,28 @@ button:hover{
     transform:scale(1.05);
 }
 
-.back{
-    display:inline-block;
-    margin-top:40px;
-    padding:10px 20px;
-    background:white;
-    color:black;
-    border-radius:25px;
-    text-decoration:none;
-    font-weight:600;
+/* FORM */
+#formContainer{
+    display:none;
+    max-width:500px;
+    margin:40px auto;
+    background:rgba(255,255,255,0.05);
+    padding:30px;
+    border-radius:15px;
+}
+
+input, textarea{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border:none;
+    border-radius:8px;
+}
+
+#backBtn{
+    margin-top:15px;
+    background:#555;
+    color:white;
 }
 </style>
 </head>
@@ -75,66 +83,133 @@ button:hover{
 
 <h1>Application Center</h1>
 
-<div class="grid">
+<!-- CATEGORIES -->
 
-<div class="card">
-<h3>SASP</h3>
-<button onclick="location.href='apply.html?dept=sasp'">Apply</button>
+<div class="category">
+<h2>🚓 Departments</h2>
+<div class="buttons">
+<button onclick="openForm('SASP')">SASP</button>
+<button onclick="openForm('BCSO')">BCSO</button>
+<button onclick="openForm('LSPD')">LSPD</button>
+</div>
 </div>
 
-<div class="card">
-<h3>BCSO</h3>
-<button onclick="location.href='apply.html?dept=bcso'">Apply</button>
+<div class="category">
+<h2>🔫 Gangs</h2>
+<div class="buttons">
+<button onclick="openForm('Grave Diggas')">Grave Diggas</button>
+<button onclick="openForm('Blue Devils')">Los Blue Devils</button>
+<button onclick="openForm('400 Hustlers')">400 Hustlers</button>
+</div>
 </div>
 
-<div class="card">
-<h3>LSPD</h3>
-<button onclick="location.href='apply.html?dept=lspd'">Apply</button>
+<div class="category">
+<h2>🛠 GSRP Teams</h2>
+<div class="buttons">
+<button onclick="openForm('Staff Team')">Staff Team</button>
+<button onclick="openForm('Event Team')">Event Team</button>
+<button onclick="openForm('Core Engineer Dev Team')">Core Engineer Dev</button>
+</div>
 </div>
 
-<div class="card">
-<h3>Staff Team</h3>
-<button onclick="location.href='apply.html?dept=staff'">Apply</button>
+<div class="category">
+<h2>🏛 Civilian / Government</h2>
+<div class="buttons">
+<button onclick="openForm('Judge')">Judge</button>
+<button onclick="openForm('Department of Justice')">DOJ</button>
+<button onclick="openForm('State Judge')">State Judge</button>
+<button onclick="openForm('Governor')">Governor</button>
+</div>
 </div>
 
-<div class="card">
-<h3>400 Hustlers</h3>
-<button onclick="location.href='apply.html?dept=400hustlers'">Apply</button>
+<!-- FORM SECTION -->
+
+<div id="formContainer">
+<h2 id="formTitle"></h2>
+
+<input type="text" id="name" placeholder="Full Name">
+<input type="text" id="discord" placeholder="Discord Username">
+
+<textarea id="q1" placeholder="Question 1"></textarea>
+<textarea id="q2" placeholder="Question 2"></textarea>
+<textarea id="q3" placeholder="Question 3"></textarea>
+<textarea id="q4" placeholder="Question 4"></textarea>
+<textarea id="q5" placeholder="Question 5"></textarea>
+
+<button onclick="submitApplication()">Submit Application</button>
+<button id="backBtn" onclick="closeForm()">Back</button>
 </div>
 
-<div class="card">
-<h3>Grave Diggas</h3>
-<button onclick="location.href='apply.html?dept=gravediggas'">Apply</button>
-</div>
+<script>
 
-<div class="card">
-<h3>Blue Devils</h3>
-<button onclick="location.href='apply.html?dept=bluedevils'">Apply</button>
-</div>
+/* 🔥 ADD YOUR WEBHOOKS HERE */
+const webhooks = {
+    "SASP":"https://discord.com/api/webhooks/1479014216605372571/1EESmLywBplTXsMriDl3jJ0kmYFBsARJ5j1j2LUJqHWrFkb0C9aVD2CdOQZpu2skPemH",
+    "BCSO":"https://discord.com/api/webhooks/1479020546019561687/skM-tbFmfxMXRdHepQvwoQwSxfonJeIRo5BnOJr_As2yyrvrsuVZWor0GKnwNUzsh4nr",
+    "LSPD":"https://discord.com/api/webhooks/1479020043357392957/qK2kT6n_xdaAQK5QIWtOYqdzEuBI_67FRXsTyavWSwINeKiaAzoOzlbrcxjMHPWYhBo1",
+    "Grave Diggas":"https://discord.com/api/webhooks/1479020035472228544/PTsPzAJktbrMmH3_HBrgnudssWFxwdZ4JChZfsEhSk1iDox0sETtOEGYC41Xja1KOI0h",
+    "Blue Devils":"https://discord.com/api/webhooks/1479020041428271114/352yHlZmMX1HGtKPMcBMmeduODr-YatYBo6WL25ArIGDV6ZDkQUcQRYNjKTWZrXIqOj6",
+    "400 Hustlers":"https://discord.com/api/webhooks/1479020038974341150/mwoEDxW0hyk8K3w9MhVtN4m07wyN5ztDTOY2UFra2QP7GV8UjYMun5TwkVJti0VBbwIK
+    "Staff Team":"https://discord.com/api/webhooks/1479019533745258528/3CMhzGU_-41C0krJsz-TgtDRmislWfbnFwM9hHEARqrwjWD9jhLy8xBSrks_UO41jkkB",
+    "Event Team":"https://discord.com/api/webhooks/1479019535171453060/CW64Vbg4AkHqE8RBzEgQO6h_UVv359YdQwbbChrtwbnDXgxHKKn0zlWeRrsQpRVr7ek1T",
+    "Core Engineer Dev Team":"https://discord.com/api/webhooks/1479019535708459068/SYBDnJolXT_ZabkaxDMNE7ph5oZd_hoSsIbsqPLZncatlxKMx-zlMt2T1aPExPTwftDC",
+    "Judge":"WEBHOOK_GOV",
+    "Department of Justice":"WEBHOOK_GOV",
+    "State Judge":"WEBHOOK_GOV",
+    "Governor":"https://discord.com/api/webhooks/1479019536354377828/eNvOWyToaWgHYLure7Tn5h7G9f_Hyoc4lKjn4M1B-2SMfYvk4LuhBKddqpX4ioIeAE8K"
+};
 
-<div class="card">
-<h3>Department of Justice</h3>
-<button onclick="location.href='apply.html?dept=doj'">Apply</button>
-</div>
+let currentDepartment = "";
 
-<div class="card">
-<h3>State Judge</h3>
-<button onclick="location.href='apply.html?dept=statejudge'">Apply</button>
-</div>
+function openForm(dept){
+    currentDepartment = dept;
+    document.getElementById("formTitle").innerText = dept + " Application";
+    document.getElementById("formContainer").style.display="block";
+    window.scrollTo(0,document.body.scrollHeight);
+}
 
-<div class="card">
-<h3>Government Candidacy Office</h3>
-<button onclick="location.href='apply.html?dept=government'">Apply</button>
-</div>
+function closeForm(){
+    document.getElementById("formContainer").style.display="none";
+}
 
-<div class="card">
-<h3>Development Core</h3>
-<button onclick="location.href='apply.html?dept=devcore'">Apply</button>
-</div>
+function submitApplication(){
 
-</div>
+    const name = document.getElementById("name").value;
+    const discord = document.getElementById("discord").value;
 
-<a href="index.html" class="back">← Back to Home</a>
+    if(!name || !discord){
+        alert("Please fill required fields.");
+        return;
+    }
+
+    const payload = {
+        content:"New Application Submitted",
+        embeds:[{
+            title: currentDepartment + " Application",
+            fields:[
+                {name:"Name",value:name},
+                {name:"Discord",value:discord},
+                {name:"Q1",value:document.getElementById("q1").value || "N/A"},
+                {name:"Q2",value:document.getElementById("q2").value || "N/A"},
+                {name:"Q3",value:document.getElementById("q3").value || "N/A"},
+                {name:"Q4",value:document.getElementById("q4").value || "N/A"},
+                {name:"Q5",value:document.getElementById("q5").value || "N/A"}
+            ],
+            color:0xffffff
+        }]
+    };
+
+    fetch(webhooks[currentDepartment],{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(payload)
+    });
+
+    alert("Application Sent!");
+    closeForm();
+}
+
+</script>
 
 </body>
 </html>
