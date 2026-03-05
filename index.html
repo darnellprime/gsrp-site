@@ -38,7 +38,7 @@ body{
 
 #loadingLogo{
     width:180px;
-    animation: pulse 2s infinite;
+    animation:pulse 2s infinite;
 }
 
 @keyframes pulse{
@@ -52,15 +52,15 @@ body{
     height:4px;
     background:#222;
     margin-top:25px;
-    overflow:hidden;
     border-radius:10px;
+    overflow:hidden;
 }
 
 #loadingProgress{
     width:0%;
     height:100%;
     background:white;
-    animation: load 2.5s forwards;
+    animation:load 2.5s forwards;
 }
 
 @keyframes load{
@@ -73,16 +73,74 @@ body{
     transition:opacity 1s ease;
 }
 
-/* CURSOR */
-#cursor{
+/* NAV */
+nav{
     position:fixed;
-    width:12px;
-    height:12px;
+    width:100%;
+    padding:12px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(10px);
+    z-index:1000;
+}
+
+nav img{
+    height:95px;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:25px;
+}
+
+nav ul li{
+    cursor:pointer;
+    transition:0.3s;
+}
+
+nav ul li:hover{
+    color:#aaa;
+}
+
+/* HERO */
+.hero{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:0 20px;
+}
+
+.hero h1{
+    font-size:65px;
+    font-weight:800;
+}
+
+.hero p{
+    margin-top:15px;
+    color:#bbb;
+}
+
+/* BUTTON */
+.btn{
+    padding:12px 26px;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:600;
     background:white;
-    border-radius:50%;
-    pointer-events:none;
-    transform:translate(-50%,-50%);
-    z-index:10000;
+    color:black;
+    display:inline-block;
+    margin-top:25px;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:scale(1.05);
 }
 
 /* PARTICLES */
@@ -93,26 +151,16 @@ canvas{
     z-index:-2;
 }
 
-/* SERVER STATUS */
-#serverStatus{
-    margin-top:25px;
-    font-size:18px;
-}
-
-.btn{
-    padding:12px 26px;
-    border-radius:30px;
-    text-decoration:none;
-    font-weight:600;
+/* CURSOR */
+#cursor{
+    position:fixed;
+    width:12px;
+    height:12px;
     background:white;
-    color:black;
-    display:inline-block;
-    margin-top:20px;
-    transition:0.3s;
-}
-
-.btn:hover{
-    transform:scale(1.05);
+    border-radius:50%;
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    z-index:10000;
 }
 </style>
 </head>
@@ -127,31 +175,35 @@ canvas{
     </div>
 </div>
 
-<!-- MAIN SITE -->
 <div id="mainContent">
 
 <div id="cursor"></div>
 <canvas id="particles"></canvas>
 
-<div style="text-align:center;padding-top:120px;">
-    <h1 style="font-size:60px;">GOLDEN STATE RP</h1>
+<!-- NAVIGATION -->
+<nav>
+    <img src="logo.png">
+    <ul>
+        <li onclick="location.href='index.html'">Home</li>
+        <li onclick="window.open('YOUR_DISCORD_LINK','_blank')">Discord</li>
+        <li onclick="location.href='applications.html'">Applications</li>
+        <li onclick="location.href='tickets.html'">Tickets</li>
+        <li onclick="window.open('https://cfx.re/join/YOUR_CODE','_blank')">Connect</li>
+    </ul>
+</nav>
 
-    <div id="serverStatus">Checking Server...</div>
+<div class="hero">
+    <h1>GOLDEN STATE RP</h1>
+    <p>Professional Roleplay • Custom Systems • Community Driven</p>
 
-    <a id="connectBtn"
-       href="https://cfx.re/join/YOUR_CFX_CODE"
-       target="_blank"
-       class="btn"
-       style="pointer-events:none;opacity:0.5;">
-       Connect Now
-    </a>
+    <a href="applications.html" class="btn">Application Center</a>
 </div>
 
 </div>
 
 <script>
 
-/* LOADING SCREEN REMOVE */
+/* REMOVE LOADING */
 window.addEventListener("load",()=>{
     setTimeout(()=>{
         document.getElementById("loadingScreen").style.opacity="0";
@@ -163,15 +215,15 @@ window.addEventListener("load",()=>{
 });
 
 /* CURSOR */
-const cursor = document.getElementById("cursor");
-document.addEventListener("mousemove", e=>{
-    cursor.style.left = e.clientX+"px";
-    cursor.style.top = e.clientY+"px";
+const cursor=document.getElementById("cursor");
+document.addEventListener("mousemove",e=>{
+    cursor.style.left=e.clientX+"px";
+    cursor.style.top=e.clientY+"px";
 });
 
 /* PARTICLES */
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
 
 function resize(){
     canvas.width=window.innerWidth;
@@ -208,34 +260,6 @@ function animate(){
     requestAnimationFrame(animate);
 }
 animate();
-
-/* SERVER STATUS FIXED */
-const SERVER_IP="23.27.211.19";
-const SERVER_PORT="3086";
-
-const statusText=document.getElementById("serverStatus");
-const connectBtn=document.getElementById("connectBtn");
-
-async function checkServer(){
-    try{
-        const response=await fetch(`http://${SERVER_IP}:${SERVER_PORT}/dynamic.json`);
-        const data=await response.json();
-
-        if(data && data.clients !== undefined){
-            statusText.innerText=`?? Online — Players: ${data.clients} / ${data.sv_maxclients}`;
-            connectBtn.style.pointerEvents="auto";
-            connectBtn.style.opacity="1";
-        }else{
-            throw new Error();
-        }
-
-    }catch{
-        statusText.innerText="?? Server Status Unavailable";
-    }
-}
-
-checkServer();
-setInterval(checkServer,15000);
 
 </script>
 
