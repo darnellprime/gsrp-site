@@ -13,6 +13,7 @@
     padding:0;
     box-sizing:border-box;
     font-family:'Poppins',sans-serif;
+    scroll-behavior:smooth;
 }
 
 body{
@@ -25,7 +26,7 @@ body{
 nav{
     position:fixed;
     width:100%;
-    padding:20px 8%;
+    padding:15px 8%;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -40,13 +41,13 @@ nav.scrolled{
 }
 
 nav img{
-    height:45px;
+    height:65px; /* BIGGER LOGO */
 }
 
 nav ul{
     list-style:none;
     display:flex;
-    gap:30px;
+    gap:25px;
 }
 
 nav ul li{
@@ -57,18 +58,6 @@ nav ul li{
 
 nav ul li:hover{
     color:#aaa;
-}
-
-.login-btn{
-    padding:8px 18px;
-    border:1px solid white;
-    border-radius:30px;
-    transition:0.3s;
-}
-
-.login-btn:hover{
-    background:white;
-    color:black;
 }
 
 /* HERO */
@@ -86,7 +75,6 @@ nav ul li:hover{
 .hero h1{
     font-size:60px;
     font-weight:800;
-    letter-spacing:2px;
 }
 
 .hero p{
@@ -95,10 +83,13 @@ nav ul li:hover{
     max-width:600px;
 }
 
+/* BUTTONS */
 .buttons{
     margin-top:30px;
     display:flex;
     gap:20px;
+    flex-wrap:wrap;
+    justify-content:center;
 }
 
 .btn{
@@ -108,6 +99,8 @@ nav ul li:hover{
     cursor:pointer;
     font-weight:600;
     transition:0.3s;
+    text-decoration:none;
+    display:inline-block;
 }
 
 .btn-primary{
@@ -132,7 +125,7 @@ nav ul li:hover{
 
 /* SECTIONS */
 section{
-    padding:100px 8%;
+    padding:120px 8%;
 }
 
 .cards{
@@ -146,14 +139,9 @@ section{
     padding:30px;
     border-radius:15px;
     backdrop-filter:blur(10px);
-    transition:0.3s;
 }
 
-.card:hover{
-    transform:translateY(-10px);
-    background:rgba(255,255,255,0.08);
-}
-
+/* FOOTER */
 footer{
     text-align:center;
     padding:40px;
@@ -168,39 +156,63 @@ footer{
 <nav id="navbar">
     <img src="logo.png" alt="GSRP Logo">
     <ul>
-        <li>Home</li>
-        <li>About</li>
-        <li>Rules</li>
-        <li>Apply</li>
-        <li class="login-btn">Login</li>
+        <li onclick="scrollToSection('home')">Home</li>
+        <li onclick="scrollToSection('about')">Rules</li>
+        <li onclick="scrollToSection('apply')">Apply</li>
+        <li onclick="scrollToSection('support')">Support</li>
     </ul>
 </nav>
 
-<div class="hero">
+<!-- HERO -->
+<div class="hero" id="home">
     <h1>GOLDEN STATE RP</h1>
     <p>Immersive Roleplay. Professional Staff. Custom Systems. Built for the community.</p>
-    
+
     <div class="buttons">
-        <button class="btn btn-primary">Join Discord</button>
-        <button class="btn btn-outline">Connect to Server</button>
+        <!-- DISCORD LINK -->
+        <a href="YOUR_DISCORD_INVITE_LINK_HERE" target="_blank" class="btn btn-primary">Join Discord</a>
+
+        <!-- CFX RECONNECT -->
+        <a href="cfx.re/join/amjadk" class="btn btn-outline">Connect to Server Today!</a>
     </div>
 </div>
 
-<section>
-    <h2 style="text-align:center; margin-bottom:50px;">Why Choose Us</h2>
+<!-- RULES SECTION -->
+<section id="about">
+    <h2 style="text-align:center; margin-bottom:50px;">Server Rules</h2>
     <div class="cards">
         <div class="card">
+            <h3>Respect Everyone</h3>
+            <p>No harassment, toxicity, or discrimination.</p>
+        </div>
+        <div class="card">
             <h3>Realistic RP</h3>
-            <p>Serious roleplay environment with structured systems.</p>
+            <p>Maintain immersion at all times.</p>
         </div>
         <div class="card">
-            <h3>Active Staff</h3>
-            <p>Professional moderation and community support.</p>
+            <h3>No Exploits</h3>
+            <p>Cheating or abusing systems results in removal.</p>
         </div>
-        <div class="card">
-            <h3>Custom Features</h3>
-            <p>Unique scripts, UI systems, and development.</p>
-        </div>
+    </div>
+</section>
+
+<!-- APPLY SECTION -->
+<section id="apply">
+    <h2 style="text-align:center; margin-bottom:50px;">Applications</h2>
+    <div style="text-align:center;">
+        <p>Click below to apply to Golden State RP.</p>
+        <br><br>
+        <a href="#" class="btn btn-primary">Apply Now</a>
+    </div>
+</section>
+
+<!-- SUPPORT SECTION -->
+<section id="support">
+    <h2 style="text-align:center; margin-bottom:50px;">Support</h2>
+    <div style="text-align:center;">
+        <p>Need help? Join our Discord or contact staff.</p>
+        <br><br>
+        <a href="https://discord.gg/BgAZy6nE" target="_blank" class="btn btn-outline">Open Support Discord</a>
     </div>
 </section>
 
@@ -209,6 +221,10 @@ footer{
 </footer>
 
 <script>
+function scrollToSection(id){
+    document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
 window.addEventListener("scroll", function(){
     document.getElementById("navbar").classList.toggle("scrolled", window.scrollY > 50);
 });
