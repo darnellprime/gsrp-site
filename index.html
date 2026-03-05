@@ -1,31 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Golden State Roleplay | Developmental Website</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Golden State Roleplay</h1>
-        <p>Developmental Website</p>
-        <button onclick="showMessage()">Enter Site</button>
-    </header>
+<header class="hero">
+    <img src="logo.png" alt="GSRP Logo" class="logo">
+    <h1>Golden State Roleplay</h1>
+    <p>Developmental Website</p>
 
-    <section class="content">
-        <h2>About Us</h2>
-        <p>
-            Welcome to Golden State Roleplay. We are currently developing
-            our full experience. Stay tuned for updates, features, and more.
-        </p>
-    </section>
+    <a href="https://discord.gg/YOURDISCORD" target="_blank">
+        <button class="discord-btn">Join Our Discord</button>
+    </a>
+</header>
 
-    <footer>
-        <p>© 2026 Golden State Roleplay. All Rights Reserved.</p>
-    </footer>
+<section class="section">
+    <h2>Support Center</h2>
 
-    <script src="script.js"></script>
+    <div class="button-grid">
+        <button onclick="openTicket('Support')">Support</button>
+        <button onclick="openTicket('Emergency Director')">Emergency Director</button>
+        <button onclick="openTicket('Dev Director')">Dev Director</button>
+        <button onclick="openTicket('Staff Director')">Staff Director</button>
+    </div>
+</section>
+
+<section class="section">
+    <h2>Application Center</h2>
+
+    <form onsubmit="submitApplication(event)" class="app-form">
+        <input type="text" placeholder="Full Name" required>
+        <textarea placeholder="Why do you want to join GSRP?" required></textarea>
+        <button type="submit">Submit Application</button>
+    </form>
+</section>
+
+<footer>
+    <p>© 2026 Golden State Roleplay</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
