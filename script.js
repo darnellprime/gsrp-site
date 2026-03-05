@@ -1,14 +1,14 @@
-function openTicket(department) {
-    const message = prompt("Describe your issue:");
-
+function openTicket(type) {
+    const message = prompt("Describe your request:");
     if (!message) return;
-
-    alert("Ticket sent to " + department + "!");
-
-    // If you want real Discord logging, I can add webhook support next.
+    alert(type + " request submitted.");
 }
 
-function submitApplication(event) {
-    event.preventDefault();
-    alert("Application submitted successfully!");
+function openApplication() {
+    alert("Application system coming soon.");
+}
+
+function discordLogin() {
+    // This will later link to Discord OAuth
+    alert("Discord login system requires backend setup.");
 }

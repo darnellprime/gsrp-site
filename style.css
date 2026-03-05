@@ -1,77 +1,102 @@
-body {
+* {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: white;
-    text-align: center;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #000;
+    color: #fff;
+}
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.brand {
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.discord-login {
+    background: #fff;
+    color: #000;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .hero {
-    padding: 80px 20px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    background: url("bear.png") no-repeat center center/contain;
+    background-size: 40%;
+    opacity: 0.15;
 }
 
-.logo {
-    width: 160px;
-    margin-bottom: 20px;
+.hero-content {
+    position: relative;
+    z-index: 2;
 }
 
-h1 {
-    margin: 10px 0;
+.hero h1 {
+    font-size: 60px;
+    letter-spacing: 3px;
+}
+
+.hero p {
+    margin-top: 15px;
+    color: #aaa;
 }
 
 .section {
-    padding: 60px 20px;
-    background: rgba(0,0,0,0.3);
-    margin-top: 20px;
+    padding: 100px 40px;
+    text-align: center;
 }
 
-.button-grid {
+.card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
 }
 
-button {
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    background: #00b4d8;
-    color: white;
-    font-weight: bold;
-    transition: 0.3s;
+.card {
+    background: #111;
+    padding: 30px;
+    border-radius: 12px;
 }
 
-button:hover {
-    background: #0096c7;
+.card h3 {
+    margin-bottom: 10px;
 }
 
-.discord-btn {
-    background: #5865F2;
+.card button {
     margin-top: 15px;
-}
-
-.discord-btn:hover {
-    background: #4752c4;
-}
-
-.app-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-input, textarea {
-    padding: 10px;
-    border-radius: 5px;
+    padding: 8px 16px;
     border: none;
+    background: #fff;
+    color: #000;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 footer {
-    padding: 20px;
-    background: rgba(0,0,0,0.5);
-    margin-top: 40px;
+    text-align: center;
+    padding: 30px;
+    background: #111;
+    margin-top: 50px;
 }

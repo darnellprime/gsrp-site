@@ -3,44 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Golden State Roleplay | Developmental Website</title>
+    <title>Golden State RP</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="hero">
-    <img src="logo.png" alt="GSRP Logo" class="logo">
-    <h1>Golden State Roleplay</h1>
-    <p>Developmental Website</p>
+<nav class="navbar">
+    <div class="brand">Golden State RP</div>
+    <button class="discord-login" onclick="discordLogin()">
+        Login with Discord
+    </button>
+</nav>
 
-    <a href="https://discord.gg/YOURDISCORD" target="_blank">
-        <button class="discord-btn">Join Our Discord</button>
-    </a>
-</header>
-
-<section class="section">
-    <h2>Support Center</h2>
-
-    <div class="button-grid">
-        <button onclick="openTicket('Support')">Support</button>
-        <button onclick="openTicket('Emergency Director')">Emergency Director</button>
-        <button onclick="openTicket('Dev Director')">Dev Director</button>
-        <button onclick="openTicket('Staff Director')">Staff Director</button>
+<section class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+        <h1>Golden State RP</h1>
+        <p>Built for Roleplay. Designed for Community.</p>
     </div>
 </section>
 
 <section class="section">
-    <h2>Application Center</h2>
+    <h2>Community Access</h2>
 
-    <form onsubmit="submitApplication(event)" class="app-form">
-        <input type="text" placeholder="Full Name" required>
-        <textarea placeholder="Why do you want to join GSRP?" required></textarea>
-        <button type="submit">Submit Application</button>
-    </form>
+    <div class="card-grid">
+        <div class="card">
+            <h3>Support</h3>
+            <p>Create a support ticket.</p>
+            <button onclick="openTicket('Support')">Open</button>
+        </div>
+
+        <div class="card">
+            <h3>Applications</h3>
+            <p>Join our departments or staff team.</p>
+            <button onclick="openApplication()">Apply</button>
+        </div>
+    </div>
 </section>
 
 <footer>
-    <p>© 2026 Golden State Roleplay</p>
+    © 2026 Golden State RP
 </footer>
 
 <script src="script.js"></script>
