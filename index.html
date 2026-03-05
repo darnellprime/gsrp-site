@@ -29,28 +29,24 @@ nav{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    background:rgba(0,0,0,0.5);
+    background:rgba(0,0,0,0.6);
     backdrop-filter:blur(10px);
     z-index:1000;
 }
 
-nav.scrolled{ background:black; }
-
 nav img{
-    height:85px; /* BIGGER LOGO */
+    height:95px; /* BIGGER LOGO */
 }
 
 nav ul{
     list-style:none;
     display:flex;
-    gap:22px;
-    align-items:center;
+    gap:25px;
 }
 
 nav ul li{
     cursor:pointer;
     transition:0.3s;
-    font-weight:500;
 }
 
 nav ul li:hover{
@@ -66,7 +62,7 @@ nav ul li:hover{
     align-items:center;
     text-align:center;
     padding:0 20px;
-    background:radial-gradient(circle at center, #1a1a1a, #000);
+    background:radial-gradient(circle at center,#1a1a1a,#000);
 }
 
 .hero h1{
@@ -92,10 +88,8 @@ nav ul li:hover{
 .btn{
     padding:12px 26px;
     border-radius:30px;
-    border:none;
-    cursor:pointer;
-    font-weight:600;
     text-decoration:none;
+    font-weight:600;
     transition:0.3s;
 }
 
@@ -111,37 +105,11 @@ nav ul li:hover{
 .btn-outline{
     border:1px solid white;
     color:white;
-    background:transparent;
 }
 
 .btn-outline:hover{
     background:white;
     color:black;
-}
-
-/* SECTIONS */
-section{
-    padding:120px 8%;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-}
-
-.card{
-    background:rgba(255,255,255,0.05);
-    padding:25px;
-    border-radius:15px;
-}
-
-/* FOOTER */
-footer{
-    text-align:center;
-    padding:40px;
-    background:black;
-    color:#777;
 }
 </style>
 </head>
@@ -149,71 +117,29 @@ footer{
 <body>
 
 <nav>
-    <img src="logo.png" alt="GSRP Logo">
-
+    <img src="logo.png" alt="Logo">
     <ul>
-        <li onclick="scrollToSection('home')">Home</li>
-        <li onclick="scrollToSection('about')">Rules</li>
-        <li onclick="openApplications()">Application Center</li>
-        <li onclick="scrollToSection('support')">Support</li>
+        <li onclick="location.href='index.html'">Home</li>
+        <li onclick="location.href='applications.html'">Application Center</li>
     </ul>
 </nav>
 
-<!-- HERO -->
-<div class="hero" id="home">
+<div class="hero">
     <h1>GOLDEN STATE RP</h1>
-    <p>Professional Roleplay. Structured Departments. Custom Systems. Built for Community Excellence.</p>
+    <p>Professional Roleplay • Departments • Custom Systems • Community Driven</p>
 
     <div class="buttons">
-        <!-- WORKING DISCORD BUTTON -->
-        <a href="https://discord.gg/6V2xbWDs" target="_blank" class="btn btn-primary">
+        <!-- DISCORD LINK -->
+        <a href="YOUR_DISCORD_INVITE_LINK" target="_blank" class="btn btn-primary">
             Join Discord
         </a>
 
         <!-- CFX LINK -->
-        <a href="https://cfx.re/join/amjadk" target="_blank" class="btn btn-outline">
+        <a href="https://cfx.re/join/YOUR_CODE" target="_blank" class="btn btn-outline">
             Connect to Server
         </a>
     </div>
 </div>
-
-<!-- RULES -->
-<section id="about">
-    <h2 style="text-align:center; margin-bottom:50px;">Server Rules</h2>
-    <div class="cards">
-        <div class="card">Respect all players.</div>
-        <div class="card">Realistic roleplay required.</div>
-        <div class="card">No exploiting or cheating.</div>
-    </div>
-</section>
-
-<!-- SUPPORT -->
-<section id="support">
-    <h2 style="text-align:center; margin-bottom:50px;">Support</h2>
-    <div style="text-align:center;">
-        <a href="https://discord.gg/6V2xbWDs" target="_blank" class="btn btn-outline">
-            Open Support Team Willing To Help!
-        </a>
-    </div>
-</section>
-
-<footer>
-    © 2026 Golden State RP
-</footer>
-
-<script>
-function scrollToSection(id){
-    document.getElementById(id).scrollIntoView({behavior:'smooth'});
-}
-
-function openApplications(){
-    window.open("applications.html", "_blank");
-}
-
-window.addEventListener("scroll", function(){
-    document.querySelector("nav").classList.toggle("scrolled", window.scrollY > 50);
-});
-</script>
 
 </body>
 </html>
