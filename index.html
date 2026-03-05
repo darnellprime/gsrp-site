@@ -19,9 +19,11 @@
 body{
     background:#0a0a0a;
     color:white;
+    overflow-x:hidden;
+    cursor:none;
 }
 
-/* NAV */
+/* NAVBAR */
 nav{
     position:fixed;
     width:100%;
@@ -35,7 +37,7 @@ nav{
 }
 
 nav img{
-    height:95px; /* BIGGER LOGO */
+    height:95px;
 }
 
 nav ul{
@@ -62,7 +64,6 @@ nav ul li:hover{
     align-items:center;
     text-align:center;
     padding:0 20px;
-    background:radial-gradient(circle at center,#1a1a1a,#000);
 }
 
 .hero h1{
@@ -76,7 +77,6 @@ nav ul li:hover{
     max-width:650px;
 }
 
-/* BUTTONS */
 .buttons{
     margin-top:30px;
     display:flex;
@@ -111,35 +111,161 @@ nav ul li:hover{
     background:white;
     color:black;
 }
+
+/* SECTIONS */
+section{
+    padding:120px 8%;
+}
+
+.center{
+    text-align:center;
+}
+
+/* FLOATING LOGO */
+#bg-logo{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:500px;
+    opacity:0.05;
+    z-index:-1;
+    animation:floatLogo 8s ease-in-out infinite;
+}
+
+@keyframes floatLogo{
+    0%{transform:translate(-50%,-50%) translateY(0);}
+    50%{transform:translate(-50%,-50%) translateY(-20px);}
+    100%{transform:translate(-50%,-50%) translateY(0);}
+}
+
+/* PARTICLES */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-2;
+}
+
+/* CUSTOM CURSOR */
+#cursor{
+    position:fixed;
+    width:12px;
+    height:12px;
+    background:white;
+    border-radius:50%;
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    z-index:9999;
+}
 </style>
 </head>
 
 <body>
 
+<!-- Background Elements -->
+<img src="logo.png" id="bg-logo">
+<div id="cursor"></div>
+<canvas id="particles"></canvas>
+
+<!-- NAV -->
 <nav>
-    <img src="logo.png" alt="Logo">
+    <img src="logo.png">
     <ul>
-        <li onclick="location.href='index.html'">Home</li>
+        <li onclick="scrollToSection('home')">Home</li>
+        <li onclick="scrollToSection('rules')">Rules</li>
         <li onclick="location.href='applications.html'">Application Center</li>
+        <li onclick="location.href='tickets.html'">Tickets</li>
     </ul>
 </nav>
 
-<div class="hero">
+<!-- HERO -->
+<div class="hero" id="home">
     <h1>GOLDEN STATE RP</h1>
     <p>Professional Roleplay • Departments • Custom Systems • Community Driven</p>
 
     <div class="buttons">
-        <!-- DISCORD LINK -->
-        <a href="YOUR_DISCORD_INVITE_LINK" target="_blank" class="btn btn-primary">
-            Join Discord
-        </a>
-
-        <!-- CFX LINK -->
-        <a href="https://cfx.re/join/YOUR_CODE" target="_blank" class="btn btn-outline">
-            Connect to Server
-        </a>
+        <a href="YOUR_DISCORD_INVITE" target="_blank" class="btn btn-primary">Join Discord</a>
+        <a href="https://cfx.re/join/YOUR_CODE" target="_blank" class="btn btn-outline">Connect to Server</a>
     </div>
 </div>
+
+<!-- RULES -->
+<section id="rules" class="center">
+    <h2>Server Rules</h2>
+    <p style="color:#bbb;margin-top:20px;">
+        Respect players • Realistic RP • No exploiting • Follow staff instructions
+    </p>
+</section>
+
+<script>
+
+/* CUSTOM CURSOR */
+const cursor = document.getElementById("cursor");
+document.addEventListener("mousemove", e=>{
+    cursor.style.left = e.clientX+"px";
+    cursor.style.top = e.clientY+"px";
+});
+
+/* PARTICLES */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+class Particle{
+    constructor(){
+        this.x = Math.random()*canvas.width;
+        this.y = Math.random()*canvas.height;
+        this.size = Math.random()*2;
+        this.speedX = (Math.random()-0.5)*0.5;
+        this.speedY = (Math.random()-0.5)*0.5;
+    }
+    update(){
+        this.x+=this.speedX;
+        this.y+=this.speedY;
+        if(this.x<0||this.x>canvas.width) this.speedX*=-1;
+        if(this.y<0||this.y>canvas.height) this.speedY*=-1;
+    }
+    draw(){
+        ctx.fillStyle="white";
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+        ctx.fill();
+    }
+}
+
+function init(){
+    for(let i=0;i<80;i++){
+        particles.push(new Particle());
+    }
+}
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+        p.update();
+        p.draw();
+    });
+    requestAnimationFrame(animate);
+}
+
+init();
+animate();
+
+window.addEventListener("resize",()=>{
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+});
+
+/* SMOOTH SCROLL */
+function scrollToSection(id){
+    document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+</script>
 
 </body>
 </html>
