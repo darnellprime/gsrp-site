@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Application Center</title>
+<title>Application Center | Golden State RP</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
@@ -24,19 +24,27 @@ h1{
 
 .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
     gap:20px;
+    max-width:1100px;
+    margin:auto;
 }
 
 .card{
     background:rgba(255,255,255,0.05);
-    padding:20px;
-    border-radius:12px;
+    padding:25px;
+    border-radius:15px;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    background:rgba(255,255,255,0.08);
 }
 
 button{
     margin-top:15px;
-    padding:10px 20px;
+    padding:10px 22px;
     border-radius:25px;
     border:none;
     background:white;
@@ -49,6 +57,17 @@ button{
 button:hover{
     transform:scale(1.05);
 }
+
+.back{
+    display:inline-block;
+    margin-top:40px;
+    padding:10px 20px;
+    background:white;
+    color:black;
+    border-radius:25px;
+    text-decoration:none;
+    font-weight:600;
+}
 </style>
 </head>
 
@@ -60,41 +79,62 @@ button:hover{
 
 <div class="card">
 <h3>SASP</h3>
-<button onclick="openApply('SASP')">Apply</button>
+<button onclick="location.href='apply.html?dept=sasp'">Apply</button>
 </div>
 
 <div class="card">
 <h3>BCSO</h3>
-<button onclick="openApply('BCSO')">Apply</button>
+<button onclick="location.href='apply.html?dept=bcso'">Apply</button>
 </div>
 
 <div class="card">
 <h3>LSPD</h3>
-<button onclick="openApply('LSPD')">Apply</button>
+<button onclick="location.href='apply.html?dept=lspd'">Apply</button>
 </div>
 
 <div class="card">
-<h3>Staff</h3>
-<button onclick="openApply('Staff')">Apply</button>
+<h3>Staff Team</h3>
+<button onclick="location.href='apply.html?dept=staff'">Apply</button>
 </div>
 
 <div class="card">
-<h3>Gang / Organization</h3>
-<button onclick="openApply('Organization')">Apply</button>
+<h3>400 Hustlers</h3>
+<button onclick="location.href='apply.html?dept=400hustlers'">Apply</button>
 </div>
 
 <div class="card">
-<h3>Government / DOJ</h3>
-<button onclick="openApply('Government')">Apply</button>
+<h3>Grave Diggas</h3>
+<button onclick="location.href='apply.html?dept=gravediggas'">Apply</button>
+</div>
+
+<div class="card">
+<h3>Blue Devils</h3>
+<button onclick="location.href='apply.html?dept=bluedevils'">Apply</button>
+</div>
+
+<div class="card">
+<h3>Department of Justice</h3>
+<button onclick="location.href='apply.html?dept=doj'">Apply</button>
+</div>
+
+<div class="card">
+<h3>State Judge</h3>
+<button onclick="location.href='apply.html?dept=statejudge'">Apply</button>
+</div>
+
+<div class="card">
+<h3>Government Candidacy Office</h3>
+<button onclick="location.href='apply.html?dept=government'">Apply</button>
+</div>
+
+<div class="card">
+<h3>Development Core</h3>
+<button onclick="location.href='apply.html?dept=devcore'">Apply</button>
 </div>
 
 </div>
 
-<script>
-function openApply(type){
-    window.open("apply.html?type=" + type, "_blank");
-}
-</script>
+<a href="index.html" class="back">← Back to Home</a>
 
 </body>
 </html>

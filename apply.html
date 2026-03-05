@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Golden State RP Application</title>
+<title>Application Form</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
@@ -27,11 +27,6 @@ body{
     backdrop-filter:blur(10px);
 }
 
-h2{
-    text-align:center;
-    margin-bottom:20px;
-}
-
 input, textarea, select{
     width:100%;
     padding:10px;
@@ -50,11 +45,6 @@ button{
     color:black;
     font-weight:600;
     cursor:pointer;
-    transition:0.3s;
-}
-
-button:hover{
-    transform:scale(1.05);
 }
 </style>
 </head>
@@ -63,20 +53,12 @@ button:hover{
 
 <div class="container">
 
-<h2 id="title">Application</h2>
+<h2>Application Center</h2>
 
 <select id="department">
-    <option value="SASP">SASP</option>
-    <option value="BCSO">BCSO</option>
-    <option value="LSPD">LSPD</option>
-    <option value="Staff">Staff</option>
-    <option value="400 Hustlers">400 Hustlers</option>
-    <option value="Grave Diggas">Grave Diggas</option>
-    <option value="Blue Devils">Blue Devils</option>
-    <option value="Department of Justice">Department of Justice</option>
-    <option value="State Judge">State Judge</option>
-    <option value="Government Candidacy Office">Government Candidacy Office</option>
-    <option value="Development Core">Development Core</option>
+    <option value="sasp">SASP</option>
+    <option value="bcso">BCSO</option>
+    <option value="lspd">LSPD</option>
 </select>
 
 <input type="text" id="name" placeholder="Full Name">
@@ -89,9 +71,15 @@ button:hover{
 
 <script>
 
-/* 🔥 PUT YOUR DISCORD WEBHOOK BELOW THIS LINE */
-const webhook = "https://discord.com/api/webhooks/1479014216605372571/1EESmLywBplTXsMriDl3jJ0kmYFBsARJ5j1j2LUJqHWrFkb0C9aVD2CdOQZpu2skPemH";
-/* 🔥 PUT YOUR DISCORD WEBHOOK ABOVE THIS LINE */
+/* 🔥 PUT YOUR FTO ROLE ID HERE */
+const FTO_ROLE_ID = "1469440813212635262";
+
+/* 🔥 SEPARATE WEBHOOKS PER DEPARTMENT */
+const webhooks = {
+    sasp: "https://discord.com/api/webhooks/1479014216605372571/1EESmLywBplTXsMriDl3jJ0kmYFBsARJ5j1j2LUJqHWrFkb0C9aVD2CdOQZpu2skPemH",
+    bcso: "https://discord.com/api/webhooks/1479014216605372571/1EESmLywBplTXsMriDl3jJ0kmYFBsARJ5j1j2LUJqHWrFkb0C9aVD2CdOQZpu2skPemH",
+    lspd: "https://discord.com/api/webhooks/1479014216605372571/1EESmLywBplTXsMriDl3jJ0kmYFBsARJ5j1j2LUJqHWrFkb0C9aVD2CdOQZpu2skPemH"
+};
 
 function submitApp(){
 
@@ -101,38 +89,31 @@ function submitApp(){
     const reason = document.getElementById("reason").value;
 
     if(!name || !discord || !reason){
-        alert("Please fill out all fields.");
+        alert("Please fill all fields.");
         return;
     }
 
-    const payload = {
-        content: "**New Application Received**",
-        embeds: [{
-            title: department + " Application",
-            color: 0xffffff,
-            fields: [
-                { name: "Department", value: department },
-                { name: "Name", value: name },
-                { name: "Discord", value: discord },
-                { name: "Reason", value: reason }
-            ]
-        }]
-    };
+    const webhook = webhooks[department];
 
-    fetch(webhook, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    })
-    .then(response => {
-        if(response.ok){
-            alert("Application Sent Successfully!");
-            window.close();
-        } else {
-            alert("Error sending application.");
-        }
+    fetch(webhook,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+            content:`<@&${FTO_ROLE_ID}>`,
+            embeds:[{
+                title: department.toUpperCase() + " Application",
+                color:0xffffff,
+                fields:[
+                    {name:"Name",value:name},
+                    {name:"Discord",value:discord},
+                    {name:"Reason",value:reason}
+                ]
+            }]
+        })
     });
 
+    alert("Application Sent!");
+    window.location.href="applications.html";
 }
 
 </script>
