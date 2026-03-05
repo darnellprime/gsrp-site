@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Golden State RP</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -13,7 +13,6 @@
     padding:0;
     box-sizing:border-box;
     font-family:'Poppins',sans-serif;
-    scroll-behavior:smooth;
 }
 
 body{
@@ -23,7 +22,7 @@ body{
     cursor:none;
 }
 
-/* NAVBAR */
+/* NAV */
 nav{
     position:fixed;
     width:100%;
@@ -48,11 +47,6 @@ nav ul{
 
 nav ul li{
     cursor:pointer;
-    transition:0.3s;
-}
-
-nav ul li:hover{
-    color:#aaa;
 }
 
 /* HERO */
@@ -74,23 +68,17 @@ nav ul li:hover{
 .hero p{
     margin-top:15px;
     color:#bbb;
-    max-width:650px;
 }
 
-.buttons{
-    margin-top:30px;
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
-    justify-content:center;
-}
-
+/* BUTTONS */
 .btn{
     padding:12px 26px;
     border-radius:30px;
     text-decoration:none;
     font-weight:600;
     transition:0.3s;
+    display:inline-block;
+    margin-top:20px;
 }
 
 .btn-primary{
@@ -100,25 +88,6 @@ nav ul li:hover{
 
 .btn-primary:hover{
     transform:scale(1.07);
-}
-
-.btn-outline{
-    border:1px solid white;
-    color:white;
-}
-
-.btn-outline:hover{
-    background:white;
-    color:black;
-}
-
-/* SECTIONS */
-section{
-    padding:120px 8%;
-}
-
-.center{
-    text-align:center;
 }
 
 /* FLOATING LOGO */
@@ -147,7 +116,7 @@ canvas{
     z-index:-2;
 }
 
-/* CUSTOM CURSOR */
+/* CURSOR */
 #cursor{
     position:fixed;
     width:12px;
@@ -163,45 +132,44 @@ canvas{
 
 <body>
 
-<!-- Background Elements -->
 <img src="logo.png" id="bg-logo">
 <div id="cursor"></div>
 <canvas id="particles"></canvas>
 
-<!-- NAV -->
 <nav>
     <img src="logo.png">
     <ul>
-        <li onclick="scrollToSection('home')">Home</li>
-        <li onclick="scrollToSection('rules')">Rules</li>
+        <li onclick="location.href='index.html'">Home</li>
         <li onclick="location.href='applications.html'">Application Center</li>
         <li onclick="location.href='tickets.html'">Tickets</li>
     </ul>
 </nav>
 
-<!-- HERO -->
-<div class="hero" id="home">
+<div class="hero">
     <h1>GOLDEN STATE RP</h1>
-    <p>Professional Roleplay • Departments • Custom Systems • Community Driven</p>
+    <p>Professional Roleplay • Custom Systems • Community Driven</p>
 
-    <div class="buttons">
-        <a href="YOUR_DISCORD_INVITE" target="_blank" class="btn btn-primary">Join Discord</a>
-        <a href="https://cfx.re/join/YOUR_CODE" target="_blank" class="btn btn-outline">Connect to Server</a>
+    <!-- SERVER STATUS -->
+    <div id="serverStatus" style="margin-top:30px;font-size:18px;">
+        Checking server...
     </div>
-</div>
 
-<!-- RULES -->
-<section id="rules" class="center">
-    <h2>Server Rules</h2>
-    <p style="color:#bbb;margin-top:20px;">
-        Respect players • Realistic RP • No exploiting • Follow staff instructions
-    </p>
-</section>
+    <!-- CONNECT BUTTON -->
+    <a id="connectBtn"
+       href="https://cfx.re/join/YOUR_CFX_CODE"
+       target="_blank"
+       class="btn btn-primary"
+       style="pointer-events:none;opacity:0.5;">
+       Connect Now
+    </a>
+
+</div>
 
 <script>
 
 /* CUSTOM CURSOR */
 const cursor = document.getElementById("cursor");
+
 document.addEventListener("mousemove", e=>{
     cursor.style.left = e.clientX+"px";
     cursor.style.top = e.clientY+"px";
@@ -211,18 +179,23 @@ document.addEventListener("mousemove", e=>{
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function resizeCanvas(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
 
-let particles = [];
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+let particles=[];
 
 class Particle{
     constructor(){
-        this.x = Math.random()*canvas.width;
-        this.y = Math.random()*canvas.height;
-        this.size = Math.random()*2;
-        this.speedX = (Math.random()-0.5)*0.5;
-        this.speedY = (Math.random()-0.5)*0.5;
+        this.x=Math.random()*canvas.width;
+        this.y=Math.random()*canvas.height;
+        this.size=Math.random()*2+1;
+        this.speedX=(Math.random()-0.5);
+        this.speedY=(Math.random()-0.5);
     }
     update(){
         this.x+=this.speedX;
@@ -239,7 +212,7 @@ class Particle{
 }
 
 function init(){
-    for(let i=0;i<80;i++){
+    for(let i=0;i<100;i++){
         particles.push(new Particle());
     }
 }
@@ -256,15 +229,37 @@ function animate(){
 init();
 animate();
 
-window.addEventListener("resize",()=>{
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
-});
+/* SERVER STATUS */
+const SERVER_IP = "23.27.211.19";
+const SERVER_PORT = "3086";
 
-/* SMOOTH SCROLL */
-function scrollToSection(id){
-    document.getElementById(id).scrollIntoView({behavior:"smooth"});
+const statusText = document.getElementById("serverStatus");
+const connectBtn = document.getElementById("connectBtn");
+
+async function checkServer(){
+    try{
+        const response = await fetch(`http://${SERVER_IP}:${SERVER_PORT}/dynamic.json`);
+        const data = await response.json();
+
+        const players = data.clients;
+        const max = data.sv_maxclients;
+
+        statusText.innerText = `?? Online — Players: ${players} / ${max}`;
+
+        connectBtn.style.pointerEvents="auto";
+        connectBtn.style.opacity="1";
+
+    } catch{
+        statusText.innerText = "?? Server Offline";
+
+        connectBtn.style.pointerEvents="none";
+        connectBtn.style.opacity="0.5";
+    }
 }
+
+checkServer();
+setInterval(checkServer,15000);
+
 </script>
 
 </body>
