@@ -19,41 +19,38 @@
 body{
     background:#0a0a0a;
     color:white;
-    overflow-x:hidden;
 }
 
-/* NAVBAR */
+/* NAV */
 nav{
     position:fixed;
     width:100%;
-    padding:15px 8%;
+    padding:12px 8%;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    background:rgba(0,0,0,0.4);
+    background:rgba(0,0,0,0.5);
     backdrop-filter:blur(10px);
-    transition:0.3s;
     z-index:1000;
 }
 
-nav.scrolled{
-    background:black;
-}
+nav.scrolled{ background:black; }
 
 nav img{
-    height:65px; /* BIGGER LOGO */
+    height:85px; /* BIGGER LOGO */
 }
 
 nav ul{
     list-style:none;
     display:flex;
-    gap:25px;
+    gap:22px;
+    align-items:center;
 }
 
 nav ul li{
     cursor:pointer;
-    font-weight:500;
     transition:0.3s;
+    font-weight:500;
 }
 
 nav ul li:hover{
@@ -73,14 +70,14 @@ nav ul li:hover{
 }
 
 .hero h1{
-    font-size:60px;
+    font-size:65px;
     font-weight:800;
 }
 
 .hero p{
     margin-top:15px;
     color:#bbb;
-    max-width:600px;
+    max-width:650px;
 }
 
 /* BUTTONS */
@@ -93,14 +90,13 @@ nav ul li:hover{
 }
 
 .btn{
-    padding:12px 25px;
+    padding:12px 26px;
     border-radius:30px;
     border:none;
     cursor:pointer;
     font-weight:600;
-    transition:0.3s;
     text-decoration:none;
-    display:inline-block;
+    transition:0.3s;
 }
 
 .btn-primary{
@@ -109,13 +105,13 @@ nav ul li:hover{
 }
 
 .btn-primary:hover{
-    transform:scale(1.05);
+    transform:scale(1.07);
 }
 
 .btn-outline{
-    background:transparent;
     border:1px solid white;
     color:white;
+    background:transparent;
 }
 
 .btn-outline:hover{
@@ -131,14 +127,13 @@ section{
 .cards{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:30px;
+    gap:25px;
 }
 
 .card{
     background:rgba(255,255,255,0.05);
-    padding:30px;
+    padding:25px;
     border-radius:15px;
-    backdrop-filter:blur(10px);
 }
 
 /* FOOTER */
@@ -153,12 +148,13 @@ footer{
 
 <body>
 
-<nav id="navbar">
+<nav>
     <img src="logo.png" alt="GSRP Logo">
+
     <ul>
         <li onclick="scrollToSection('home')">Home</li>
         <li onclick="scrollToSection('about')">Rules</li>
-        <li onclick="scrollToSection('apply')">Apply</li>
+        <li onclick="openApplications()">Application Center</li>
         <li onclick="scrollToSection('support')">Support</li>
     </ul>
 </nav>
@@ -166,58 +162,43 @@ footer{
 <!-- HERO -->
 <div class="hero" id="home">
     <h1>GOLDEN STATE RP</h1>
-    <p>Immersive Roleplay. Professional Staff. Custom Systems. Built for the community.</p>
+    <p>Professional Roleplay. Structured Departments. Custom Systems. Built for Community Excellence.</p>
 
     <div class="buttons">
-        <!-- DISCORD LINK -->
-        <a href="YOUR_DISCORD_INVITE_LINK_HERE" target="_blank" class="btn btn-primary">Join Discord</a>
+        <!-- WORKING DISCORD BUTTON -->
+        <a href="https://discord.gg/6V2xbWDs" target="_blank" class="btn btn-primary">
+            Join Discord
+        </a>
 
-        <!-- CFX RECONNECT -->
-        <a href="cfx.re/join/amjadk" class="btn btn-outline">Connect to Server Today!</a>
+        <!-- CFX LINK -->
+        <a href="https://cfx.re/join/amjadk" target="_blank" class="btn btn-outline">
+            Connect to Server
+        </a>
     </div>
 </div>
 
-<!-- RULES SECTION -->
+<!-- RULES -->
 <section id="about">
     <h2 style="text-align:center; margin-bottom:50px;">Server Rules</h2>
     <div class="cards">
-        <div class="card">
-            <h3>Respect Everyone</h3>
-            <p>No harassment, toxicity, or discrimination.</p>
-        </div>
-        <div class="card">
-            <h3>Realistic RP</h3>
-            <p>Maintain immersion at all times.</p>
-        </div>
-        <div class="card">
-            <h3>No Exploits</h3>
-            <p>Cheating or abusing systems results in removal.</p>
-        </div>
+        <div class="card">Respect all players.</div>
+        <div class="card">Realistic roleplay required.</div>
+        <div class="card">No exploiting or cheating.</div>
     </div>
 </section>
 
-<!-- APPLY SECTION -->
-<section id="apply">
-    <h2 style="text-align:center; margin-bottom:50px;">Applications</h2>
-    <div style="text-align:center;">
-        <p>Click below to apply to Golden State RP.</p>
-        <br><br>
-        <a href="#" class="btn btn-primary">Apply Now</a>
-    </div>
-</section>
-
-<!-- SUPPORT SECTION -->
+<!-- SUPPORT -->
 <section id="support">
     <h2 style="text-align:center; margin-bottom:50px;">Support</h2>
     <div style="text-align:center;">
-        <p>Need help? Join our Discord or contact staff.</p>
-        <br><br>
-        <a href="https://discord.gg/BgAZy6nE" target="_blank" class="btn btn-outline">Open Support Discord</a>
+        <a href="https://discord.gg/6V2xbWDs" target="_blank" class="btn btn-outline">
+            Open Support Team Willing To Help!
+        </a>
     </div>
 </section>
 
 <footer>
-    © 2026 Golden State RP • All Rights Reserved
+    © 2026 Golden State RP
 </footer>
 
 <script>
@@ -225,8 +206,12 @@ function scrollToSection(id){
     document.getElementById(id).scrollIntoView({behavior:'smooth'});
 }
 
+function openApplications(){
+    window.open("applications.html", "_blank");
+}
+
 window.addEventListener("scroll", function(){
-    document.getElementById("navbar").classList.toggle("scrolled", window.scrollY > 50);
+    document.querySelector("nav").classList.toggle("scrolled", window.scrollY > 50);
 });
 </script>
 
